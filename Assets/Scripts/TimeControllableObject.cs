@@ -5,85 +5,154 @@ using UnityEngine;
 
 public class TimeControllableObject : MonoBehaviour
 {
-    private bool isRewinding = false;
+    private bool isManipulatingTime = false;
+    private bool timeJustStopped = false;
+    private bool hasBeenThrown = false;
     private bool isTimeStopped = false;
-    private bool isTimeSpeedingUp = false;
+    private bool isRewinding = false;
+    public float recordTime = 2f;
 
-    private Stack<Vector4> positionHistory;
 
-    private float speedUpMultiplier = 2f;
-    private float recordTimeStep = 0.02f;
+    List<PointInTime> pointsInTime;
 
     private Vector3 savedVelocity;
     private Vector3 savedAngularVelocity;
+    private Rigidbody rb;
 
     private void Awake()
     {
-        positionHistory = new Stack<Vector4>();
+        pointsInTime = new List<PointInTime>();
+        rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    public void OnPickedUp()
     {
-        if (isTimeStopped) return;
+        hasBeenThrown = false;
+        pointsInTime.Clear();
+    }
 
+    public void OnReleased()
+    {
+        hasBeenThrown = true;
+        pointsInTime.Clear();
+    }
+
+    private void FixedUpdate()
+    {
         if (isRewinding)
         {
             Rewind();
-        }else if (isTimeSpeedingUp)
-        {
-            SpeedUpTime();
         }
         else
         {
-            RecordPosition();
+            Record();
         }
     }
 
-    public void StartRewind()
+    private void Rewind()
     {
-        if (!isTimeStopped)
+        if (pointsInTime.Count > 0)
         {
-            isRewinding = true;
-            isTimeSpeedingUp = false;
+            PointInTime pointInTime = pointsInTime[0];
+            transform.position = pointInTime.position;
+            transform.rotation = pointInTime.rotation;
+            pointsInTime.RemoveAt(0);
+
+            StopTime();
+
         }
-    }
-
-    public void StopRewind()
-    {
-        isRewinding = false;
-    }
-
-    public void StartTimeStop()
-    {
-        isTimeStopped = true ;
-        isRewinding = false;
-        isTimeSpeedingUp = false;
-    }
-
-    public void StopTimeStop()
-    {
-        isTimeStopped = false;
-    }
-
-    public void StartTimeSpeedUp()
-    {
-        if (!isTimeStopped)
+        else
         {
-            isTimeSpeedingUp = true;
-            isRewinding = false;
+            ResumeTime();
         }
     }
 
-    public void StopTimeSpeedUp()
+    private void Record()
     {
-        isTimeSpeedingUp = false;
+        if (hasBeenThrown)
+        {
+            if(pointsInTime.Count > Mathf.Round(recordTime / Time.fixedDeltaTime))
+            {
+                pointsInTime.RemoveAt(pointsInTime.Count - 1);
+            }
+                
+            pointsInTime.Insert(0, new PointInTime(transform.position, transform.rotation));
+        }
+    }
+
+    public void ManipulateTime(float joyStickX)
+    {
+        const float localStopTimeThreshold = 0.3f;
+
+        if (Mathf.Abs(joyStickX) < localStopTimeThreshold)
+        {
+            if (!isManipulatingTime && !timeJustStopped)
+            {
+                // Stop time if not already manipulating time and time isn't already stopped
+                StopTime();
+            }
+        }
+        else // If the rotation factor is outside the threshold
+        {
+            if (timeJustStopped)
+            {
+                ResumeTime();
+                timeJustStopped = false;
+            }
+
+            // Check if joystick is moved to the right to fast-forward time
+            if (joyStickX > localStopTimeThreshold)
+            {
+                Debug.Log("Calling SpeedUpTime");
+                SpeedUpTime(joyStickX - localStopTimeThreshold); // Adjust factor based on how far joystick is moved
+                //Debug.Log("FastForward Time");
+            }
+            else if (joyStickX < -localStopTimeThreshold)
+            {
+                Debug.Log("Calling SlowDownTime");
+                if(pointsInTime.Count > 0)
+                {
+                    RewindTime(-(joyStickX + localStopTimeThreshold)); // Adjust factor based on how far joystick is moved
+                }
+                //Debug.Log("Reqinding Time");
+            }
+        }
+    }
+
+    private void SpeedUpTime(float factor)
+    {
+        if (rb != null && !isManipulatingTime)
+        {
+
+            Debug.Log("Speeding Up Time");
+            // Adjust the Rigidbody's properties to speed up the object
+            float speedMultiplier = 1 + factor; // This will speed up the object based on the joystick input
+            rb.velocity *= speedMultiplier;
+            rb.angularVelocity *= speedMultiplier;
+
+            // Optionally, you could also modify other properties like drag to simulate different time speeds
+            // For example, reducing drag could simulate a 'faster' environment
+
+            isManipulatingTime = true; // Indicate that we are now manipulating time
+        }
+    }
+
+    private void RewindTime(float factor)
+    {
+        isRewinding = true;
+        rb.isKinematic = true;
+    }
+
+    public void ResetTimeManipulation()
+    {
+        isManipulatingTime = false;
+        timeJustStopped = false;
+        ResumeTime(); // Resume normal time flow if it was being manipulated
     }
 
     public void StopTime()
     {
-        Debug.Log("Stopping Time");
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
+        if (rb != null && !timeJustStopped)
         {
             // Save the current velocities
             savedVelocity = rb.velocity;
@@ -93,57 +162,31 @@ public class TimeControllableObject : MonoBehaviour
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
 
-            // Optionally, if you want to ensure the object does not move or react to forces
+            // Make the Rigidbody kinematic
             rb.isKinematic = true;
+
+            // Indicate that time has just stopped and recording should pause
+            isTimeStopped = true;
+            timeJustStopped = true;
         }
     }
+
 
     public void ResumeTime()
     {
-        Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            // Restore the object's velocities to continue its motion
+            // Restore the object's velocities
+            rb.isKinematic = false;
             rb.velocity = savedVelocity;
             rb.angularVelocity = savedAngularVelocity;
 
-            // If you made the Rigidbody kinematic in StopTime(), make sure to revert that change
-            rb.isKinematic = false;
-        }
-    }
+            // Reset the flags
+            isTimeStopped = false;
+            timeJustStopped = false;
+            isRewinding = false;
+            isManipulatingTime = false;
 
-    public void SpeedUpTime()
-    {
-        for (int i = 0; i < speedUpMultiplier; i++)
-        {
-            if (positionHistory.Count > 0)
-            {
-                transform.position = positionHistory.Pop();
-            }
-            else
-            {
-                StopTimeSpeedUp();
-                break;
-            }
-        }
-    }
-    private void Rewind()
-    {
-        if (positionHistory.Count > 0)
-        {
-            transform.position = positionHistory.Pop();
-        }
-        else
-        {
-            StopRewind();
-        }
-    }
-
-    private void RecordPosition()
-    {
-        if (positionHistory.Count == 0 || Time.time - positionHistory.Peek().w >= recordTimeStep)
-        {
-            positionHistory.Push(new Vector4(transform.position.x, transform.position.y, transform.position.z, Time.time));
         }
     }
 }

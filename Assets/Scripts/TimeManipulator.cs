@@ -72,44 +72,26 @@ public class TimeManipulator : MonoBehaviour
         {
             Debug.Log("No object picked up");
             return;
-        }else
-        {
-            Debug.Log("Object picked up");
         }
 
         UnityEngine.XR.InputDevice leftHandDevice = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
 
         if (!leftHandDevice.isValid)
         {
+            Debug.Log("Left hand device is not valid");
             return;
         }
 
-        // Check if both grip and trigger are pressed to stop time for the object
-        if (isTimeControlActive)
+        if (leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 joystickValue))
         {
-            lastPickedUpObject.StopTime();
-        }
-        else // If the fist is not closed, then we can check for rotation to rewind or speed up time
-        {
-            if (leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.deviceRotation, out Quaternion rotation))
-            {
-                Vector3 rotationEulers = rotation.eulerAngles;
-                float adjustedY = rotationEulers.y > 180f ? rotationEulers.y - 360f : rotationEulers.y;
+            // Use the x-axis of the joystick for time manipulation
+            float joystickX = joystickValue.x;
 
-                // Depending on the rotation, either rewind, speed up, or resume time
-                if (adjustedY > 0 && adjustedY <= 90f)
-                {
-                    lastPickedUpObject.SpeedUpTime();
-                }
-                else if (adjustedY < 0 && adjustedY >= -90f)
-                {
-                    lastPickedUpObject.StartRewind();
-                }
-                else
-                {
-                    lastPickedUpObject.ResumeTime(); // Resume time if the hand is not rotated to either extreme
-                }
-            }
+            // Clamp the value to ensure it's within the range of -1 to 1
+            joystickX = Mathf.Clamp(joystickX, -1f, 1f);
+
+
+            lastPickedUpObject.ManipulateTime(joystickX);
         }
     }
 
@@ -158,7 +140,11 @@ public class TimeManipulator : MonoBehaviour
             if (timeControllableObject != null && lastPickedUpObject != timeControllableObject)
             {
                 lastPickedUpObject = timeControllableObject;
+                // Reset the time manipulation state when the object is picked up
+                lastPickedUpObject.ResetTimeManipulation();
+                lastPickedUpObject.OnPickedUp();
             }
+
         }
     }
 
@@ -170,8 +156,11 @@ public class TimeManipulator : MonoBehaviour
             TimeControllableObject timeControllableObject = grabInteractable.GetComponent<TimeControllableObject>();
             if (timeControllableObject != null)
             {
-                //lastPickedUpObject = null;
+                // Handle any necessary logic when the object is released
+                lastPickedUpObject.OnReleased();
+                lastPickedUpObject.ResumeTime();
             }
+
         }
     }
 }
