@@ -7,8 +7,11 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class TimeManipulator : MonoBehaviour
 {
-    public InputActionProperty leftTriggerAction;
-    public InputActionProperty leftGripAction;
+    [SerializeField] private InputActionProperty leftTriggerAction;
+    [SerializeField] private InputActionProperty leftGripAction;
+    [SerializeField] private InputActionProperty xButton;
+    [SerializeField] private InputActionProperty yButton;
+
 
     private bool isTimeControlActive = false;
 
@@ -22,6 +25,11 @@ public class TimeManipulator : MonoBehaviour
     {
         //XRBaseInteractor interactable = GetComponent<XRBaseInteractor>();
         //interactable.activated.AddListener(TriggerHapticFeedback);
+    }
+
+    public void SetLastPickedUpObject(TimeControllableObject timeControllableObject)
+    {
+        this.lastPickedUpObject = timeControllableObject;
     }
 
     private void Update()
@@ -59,7 +67,6 @@ public class TimeManipulator : MonoBehaviour
     {
         isTimeControlActive = false;
 
-        // If there is an object that was being time-manipulated, resume its time.
         if (lastPickedUpObject != null)
         {
             lastPickedUpObject.ResumeTime();
@@ -69,30 +76,23 @@ public class TimeManipulator : MonoBehaviour
     private void UpdateTimeControl()
     {
         if (lastPickedUpObject == null)
-        {
-            Debug.Log("No object picked up");
             return;
-        }
 
-        UnityEngine.XR.InputDevice leftHandDevice = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
+        float timeControlFactor = 0f; 
 
-        if (!leftHandDevice.isValid)
+        if (xButton.action.IsPressed())
         {
-            Debug.Log("Left hand device is not valid");
-            return;
+            // rewind time
+            timeControlFactor = -1.0f;
         }
-
-        if (leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 joystickValue))
+        else if (yButton.action.triggered)
         {
-            // Use the x-axis of the joystick for time manipulation
-            float joystickX = joystickValue.x;
-
-            // Clamp the value to ensure it's within the range of -1 to 1
-            joystickX = Mathf.Clamp(joystickX, -1f, 1f);
-
-
-            lastPickedUpObject.ManipulateTime(joystickX);
+            // speed up time
+            timeControlFactor = 1.0f;
         }
+        // defaulting to no input
+
+        lastPickedUpObject.ManipulateTime(timeControlFactor);
     }
 
 
@@ -156,7 +156,6 @@ public class TimeManipulator : MonoBehaviour
             TimeControllableObject timeControllableObject = grabInteractable.GetComponent<TimeControllableObject>();
             if (timeControllableObject != null)
             {
-                // Handle any necessary logic when the object is released
                 lastPickedUpObject.OnReleased();
                 lastPickedUpObject.ResumeTime();
             }
