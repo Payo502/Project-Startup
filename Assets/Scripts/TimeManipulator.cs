@@ -84,7 +84,7 @@ public class TimeManipulator : MonoBehaviour
         if (isLeftFistClosed && !isTimeControlActive)
         {
             ActivateTimeControl();
-            //GameAudioManager.PlaySound(GameAudioManager.Sound.TimeStop);
+            GameAudioManager.PlaySound(GameAudioManager.Sound.TimeStop);
         }
         else if (!isLeftFistClosed && isTimeControlActive)
         {
@@ -138,7 +138,9 @@ public class TimeManipulator : MonoBehaviour
     {
         if (xButton.action.IsPressed())
         {
-            //GameAudioManager.PlaySound(GameAudioManager.Sound.Rewind, transform.position);
+            GameAudioManager.PlaySound(GameAudioManager.Sound.Rewind, transform.position);
+
+
             return -1.0f; // Rewind time
         }
         else if (yButton.action.triggered)

@@ -7,6 +7,7 @@ public class Explosive : MonoBehaviour
     [SerializeField] private float triggerForce = 0.5f;
     [SerializeField] private float explosionRadius = 5;
     [SerializeField] private float explosionForce = 500;
+    [SerializeField] private GameObject particles;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -21,6 +22,8 @@ public class Explosive : MonoBehaviour
 
                 rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
             }
+
+            //Instantiate(particles, transform.position, Quaternion.identity);
 
             Destroy(gameObject);
         }   

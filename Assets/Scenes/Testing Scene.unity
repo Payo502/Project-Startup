@@ -2166,55 +2166,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242343669}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &242858223
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 242858225}
-  - component: {fileID: 242858224}
-  m_Layer: 0
-  m_Name: Game Assets
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &242858224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 242858223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d63e20216bfe71140966c4b9fcbf7a30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundAudioClipArray:
-  - sound: 2
-    audioClip: {fileID: 8300000, guid: 4dd5bfeaf918c7344aac7eecddad4518, type: 3}
-  - sound: 0
-    audioClip: {fileID: 8300000, guid: 1c6837cdd2bc9fe409074f814e089e5c, type: 3}
---- !u!4 &242858225
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 242858223}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.310648, y: 0.72150713, z: 5.512984}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &246453534
 GameObject:
   m_ObjectHideFlags: 0
@@ -12688,6 +12639,7 @@ MonoBehaviour:
   triggerForce: 0.5
   explosionRadius: 5
   explosionForce: 0.01
+  particles: {fileID: 0}
 --- !u!54 &1184256352
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -22795,6 +22747,11 @@ PrefabInstance:
         type: 3}
       propertyPath: collisionMultipier
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864134397415106133, guid: 67cb8722cd0462d4189bac1e78e3b50d,
+        type: 3}
+      propertyPath: m_Mass
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67cb8722cd0462d4189bac1e78e3b50d, type: 3}
