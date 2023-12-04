@@ -55,8 +55,12 @@ Material:
     - _Float: 25
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _SHADOWS_OFF: 0
     m_Colors:
     - _Fresnelcolor: {r: 4, g: 4, b: 4, a: 1}
-    - _MainColor: {r: 0.4397906, g: 2, b: 2, a: 0}
+    - _MainColor: {r: 0.3764267, g: 2.2671144, b: 2.2671144, a: 0}
+    - _Noise_scale: {r: 800, g: 500, b: 0, a: 0}
+    - _Noise_strenght: {r: 2, g: 5, b: 0, a: 0}
     - _Tiling: {r: 100, g: 10, b: 0, a: 0}
+    - _glitch: {r: 2, g: 5, b: 0, a: 0}
   m_BuildTextureStacks: []
