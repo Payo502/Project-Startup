@@ -2157,6 +2157,8 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 7102498506567697570, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
+  sphereCastRadius: 0.5
+  selectedObjects: []
   lastPickedUpObject: {fileID: 0}
   intensity: 1
   duration: 0.1
