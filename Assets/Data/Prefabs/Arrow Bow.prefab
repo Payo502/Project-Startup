@@ -65,6 +65,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   tip: {fileID: 1769337598482281036}
+  ignoreLayerMask:
+    serializedVersion: 2
+    m_Bits: 262144
 --- !u!1 &1769337598482281027
 GameObject:
   m_ObjectHideFlags: 0

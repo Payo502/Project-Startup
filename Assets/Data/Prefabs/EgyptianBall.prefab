@@ -317,6 +317,7 @@ GameObject:
   - component: {fileID: 6223621345712395197}
   - component: {fileID: 2371098468693909020}
   - component: {fileID: 37935678273912398}
+  - component: {fileID: 9094661825535328246}
   m_Layer: 6
   m_Name: EgyptianBall
   m_TagString: Interactable
@@ -586,8 +587,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBeenThrown: 0
-  hasBeenSelected: 0
   recordTime: 10
+--- !u!114 &9094661825535328246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8675359077255156068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b13ca7ed303c84c92bf0ad2ffc98e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9022229020169153619
 GameObject:
   m_ObjectHideFlags: 0

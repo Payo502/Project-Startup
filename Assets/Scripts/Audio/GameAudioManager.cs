@@ -62,6 +62,7 @@ public static class GameAudioManager
                     if (lastTimePlayed + playerMoveTimerMax < Time.time)
                     {
                         soundTimerDictionary[sound] = Time.time;
+                        
                         return true;
                     }
                     else
@@ -73,13 +74,13 @@ public static class GameAudioManager
                 {
                     return true;
                 }
-            //break;
+            
             case Sound.Rewind:
                 if (soundTimerDictionary.ContainsKey(sound))
                 {
                     float lastTimePlayed = soundTimerDictionary[sound];
-                    float playerMoveTimerMax = 2.2f;
-                    if (lastTimePlayed + playerMoveTimerMax < Time.time)
+                    float rewindTimeMax = 2.2f;
+                    if (lastTimePlayed + rewindTimeMax < Time.time)
                     {
                         soundTimerDictionary[sound] = Time.time;
                         return true;
@@ -93,6 +94,7 @@ public static class GameAudioManager
                 {
                     return true;
                 }
+                
         }
     }
 
