@@ -7,14 +7,21 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class TimeManipulator : MonoBehaviour
 {
-    public InputActionProperty leftTriggerAction;
-    public InputActionProperty leftGripAction;
+    [SerializeField] private InputActionProperty leftTriggerAction;
+    [SerializeField] private InputActionProperty leftGripAction;
+    [SerializeField] private InputActionProperty xButton;
+    [SerializeField] private InputActionProperty yButton;
+    [SerializeField] private float sphereCastRadius = 0.5f;
+    private Camera mainCamera;
+
+    [SerializeField] private List<TimeControllableObject> selectedObjects = new List<TimeControllableObject>();
+
 
     private bool isTimeControlActive = false;
 
     public TimeControllableObject lastPickedUpObject;
 
-    [Range(0,1)]
+    [Range(0, 1)]
     public float intensity;
     public float duration;
 
@@ -22,16 +29,50 @@ public class TimeManipulator : MonoBehaviour
     {
         //XRBaseInteractor interactable = GetComponent<XRBaseInteractor>();
         //interactable.activated.AddListener(TriggerHapticFeedback);
+
+        mainCamera = Camera.main;
+    }
+
+    public void SetLastPickedUpObject(TimeControllableObject timeControllableObject)
+    {
+        this.lastPickedUpObject = timeControllableObject;
     }
 
     private void Update()
     {
         HandleTimeControlActivation();
+        ContinuousSphereCastForSelection();
+
         if (isTimeControlActive)
         {
             UpdateTimeControl();
         }
     }
+
+    private void ContinuousSphereCastForSelection()
+    {
+        if (mainCamera == null) return;
+
+        RaycastHit[] hits = Physics.SphereCastAll(mainCamera.transform.position, sphereCastRadius, mainCamera.transform.forward, Mathf.Infinity);
+        HashSet<TimeControllableObject> hitObjects = new HashSet<TimeControllableObject>();
+
+        foreach (RaycastHit hit in hits)
+        {
+            TimeControllableObject timeControllableObject = hit.collider.GetComponent<TimeControllableObject>();
+            if (timeControllableObject != null)
+            {
+                hitObjects.Add(timeControllableObject);
+                if (!selectedObjects.Contains(timeControllableObject))
+                {
+                    selectedObjects.Add(timeControllableObject);
+                }
+            }
+        }
+
+        // Remove objects that are no longer in the sphere cast
+        selectedObjects.RemoveAll(obj => !hitObjects.Contains(obj) && obj != null);
+    }
+
 
     private void HandleTimeControlActivation()
     {
@@ -43,6 +84,7 @@ public class TimeManipulator : MonoBehaviour
         if (isLeftFistClosed && !isTimeControlActive)
         {
             ActivateTimeControl();
+            //GameAudioManager.PlaySound(GameAudioManager.Sound.TimeStop);
         }
         else if (!isLeftFistClosed && isTimeControlActive)
         {
@@ -59,46 +101,57 @@ public class TimeManipulator : MonoBehaviour
     {
         isTimeControlActive = false;
 
-        // If there is an object that was being time-manipulated, resume its time.
         if (lastPickedUpObject != null)
         {
             lastPickedUpObject.ResumeTime();
+        }
+
+        foreach (var obj in selectedObjects)
+        {
+            if (obj != null)
+            {
+                obj.ResumeTime();
+            }
         }
     }
 
     private void UpdateTimeControl()
     {
-        if (lastPickedUpObject == null)
+        float timeControlFactor = GetTimeControlFactor();
+
+        foreach (var obj in selectedObjects)
         {
-            Debug.Log("No object picked up");
-            return;
+            if (obj != lastPickedUpObject) // Avoid manipulating the last picked up object twice
+            {
+                obj.ManipulateTime(timeControlFactor);
+            }
         }
 
-        UnityEngine.XR.InputDevice leftHandDevice = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
-
-        if (!leftHandDevice.isValid)
+        // Always manipulate time for the last picked up object
+        if (lastPickedUpObject != null)
         {
-            Debug.Log("Left hand device is not valid");
-            return;
+            lastPickedUpObject.ManipulateTime(timeControlFactor);
         }
+    }
 
-        if (leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 joystickValue))
+    private float GetTimeControlFactor()
+    {
+        if (xButton.action.IsPressed())
         {
-            // Use the x-axis of the joystick for time manipulation
-            float joystickX = joystickValue.x;
-
-            // Clamp the value to ensure it's within the range of -1 to 1
-            joystickX = Mathf.Clamp(joystickX, -1f, 1f);
-
-
-            lastPickedUpObject.ManipulateTime(joystickX);
+            //GameAudioManager.PlaySound(GameAudioManager.Sound.Rewind, transform.position);
+            return -1.0f; // Rewind time
         }
+        else if (yButton.action.triggered)
+        {
+            return 1.0f; // Speed up time
+        }
+        return 0f; // No input
     }
 
 
     private void TriggerHapticFeedback(XRBaseController controller)
     {
-        if(intensity > 0)
+        if (intensity > 0)
         {
             controller.SendHapticImpulse(intensity, duration);
         }
@@ -137,14 +190,18 @@ public class TimeManipulator : MonoBehaviour
         if (args.interactableObject is XRGrabInteractable grabInteractable)
         {
             TimeControllableObject timeControllableObject = grabInteractable.GetComponent<TimeControllableObject>();
-            if (timeControllableObject != null && lastPickedUpObject != timeControllableObject)
+            if (timeControllableObject != null)
             {
+                // Clear the current selection
+                selectedObjects.Clear();
+
+                // Set the new object as the last picked up object
                 lastPickedUpObject = timeControllableObject;
+
                 // Reset the time manipulation state when the object is picked up
                 lastPickedUpObject.ResetTimeManipulation();
                 lastPickedUpObject.OnPickedUp();
             }
-
         }
     }
 
@@ -156,11 +213,26 @@ public class TimeManipulator : MonoBehaviour
             TimeControllableObject timeControllableObject = grabInteractable.GetComponent<TimeControllableObject>();
             if (timeControllableObject != null)
             {
-                // Handle any necessary logic when the object is released
                 lastPickedUpObject.OnReleased();
                 lastPickedUpObject.ResumeTime();
             }
 
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (mainCamera != null)
+        {
+            // Set the color of the Gizmo
+            Gizmos.color = Color.blue;
+
+            Gizmos.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * 10); // Adjust the length as needed
+
+
+            Gizmos.DrawWireSphere(mainCamera.transform.position, sphereCastRadius);
+
+            Gizmos.DrawWireSphere(mainCamera.transform.position + mainCamera.transform.forward * 10, sphereCastRadius); // Adjust the position as needed
         }
     }
 }
