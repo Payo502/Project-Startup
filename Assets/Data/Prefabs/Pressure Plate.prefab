@@ -228,6 +228,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70196b93b8d2c774f80c6f3d867edd17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivationDelay: 2
+  stabilityCheckDuration: 1
 --- !u!65 &1599828600296129087
 BoxCollider:
   m_ObjectHideFlags: 0

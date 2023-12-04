@@ -62,6 +62,7 @@ public static class GameAudioManager
                     if (lastTimePlayed + playerMoveTimerMax < Time.time)
                     {
                         soundTimerDictionary[sound] = Time.time;
+                        
                         return true;
                     }
                     else
