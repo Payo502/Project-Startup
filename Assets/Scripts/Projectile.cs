@@ -11,6 +11,8 @@ public class Projectile : MonoBehaviour
     private bool isInAir = false;
     private Vector3 lastPosition = Vector3.zero;
 
+    [SerializeField] private LayerMask ignoreLayerMask;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -64,9 +66,9 @@ public class Projectile : MonoBehaviour
 
     private void CheckCollision()
     {
-        if (Physics.Linecast(lastPosition, tip.position, out RaycastHit hitInfo))
+        if (Physics.Linecast(lastPosition, tip.position, out RaycastHit hitInfo, ~ignoreLayerMask))
         {
-            if (hitInfo.transform.gameObject.layer != 8)
+            if (hitInfo.transform.gameObject.layer != LayerMask.NameToLayer("Invisible Wall"))
             {
                 if (hitInfo.transform.TryGetComponent(out Rigidbody body))
                 {
