@@ -23,7 +23,7 @@ public class Explosive : MonoBehaviour
                 rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
             }
 
-            //Instantiate(particles, transform.position, Quaternion.identity);
+            Instantiate(particles, transform.position, Quaternion.identity);
 
             Destroy(gameObject);
         }   
