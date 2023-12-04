@@ -5,21 +5,38 @@ using UnityEngine;
 public class MagnetPoint : MonoBehaviour
 {
     public float forceFactor = 20000f;
+    public float damping = 0.1f;
+    public float maxVelocity = 5f;
 
+    private SphereCollider magneticField;
     List<Rigidbody> rgBalls = new List<Rigidbody>();
 
     Transform magnetP;
 
-    void Start()
+    void Awake()
     {
         magnetP = GetComponent<Transform>();
+        magneticField = GetComponent<SphereCollider>();
     }
 
     private void FixedUpdate()
     {
         foreach (Rigidbody rgBall in rgBalls)
         {
-            rgBall.AddForce((magnetP.position - rgBall.position) * forceFactor * Time.fixedDeltaTime);
+            float distance = Vector2.Distance(transform.position, rgBall.position);
+            if (distance <= magneticField.radius)
+            {
+                Vector3 direction = (transform.position - rgBall.position).normalized;
+                float forceMagnitude = Mathf.Clamp(forceFactor / (distance * distance), 0f, forceFactor);
+                rgBall.AddForce(direction * forceMagnitude * Time.fixedDeltaTime);
+
+                rgBall.velocity *= 1 - damping;
+
+                if (rgBall.velocity.magnitude > maxVelocity)
+                {
+                    rgBall.velocity = rgBall.velocity.normalized * maxVelocity;
+                }
+            }
         }
     }
 

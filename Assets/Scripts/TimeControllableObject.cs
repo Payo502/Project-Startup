@@ -8,7 +8,6 @@ public class TimeControllableObject : MonoBehaviour
     private bool isManipulatingTime = false;
     private bool timeJustStopped = false;
     public bool hasBeenThrown = false;
-    private bool isTimeStopped = false;
     private bool isRewinding = false;
     public float recordTime = 5f;
 
@@ -69,15 +68,35 @@ public class TimeControllableObject : MonoBehaviour
 
     private void Record()
     {
-        if (hasBeenThrown)
+        if (hasBeenThrown || HasSignificantChange())
         {
+            if (pointsInTime.Count == 0 || HasSignificantChange())
+            {
+                pointsInTime.Insert(0, new PointInTime(transform.position, transform.rotation));
+            }
+
             if (pointsInTime.Count > Mathf.Round(recordTime / Time.fixedDeltaTime))
             {
                 pointsInTime.RemoveAt(pointsInTime.Count - 1);
             }
-
-            pointsInTime.Insert(0, new PointInTime(transform.position, transform.rotation));
         }
+    }
+
+    private bool HasSignificantChange()
+    {
+        float positionThreshold = 0.01f;
+        float rotationThreshold = 0.01f;
+
+        if (pointsInTime.Count > 0)
+        {
+            PointInTime lastPoint = pointsInTime[0];
+            float positionDelta = Vector3.Distance(lastPoint.position, transform.position);
+            float rotationDelta = Quaternion.Angle(lastPoint.rotation, transform.rotation);
+
+            return positionDelta > positionThreshold || rotationDelta > rotationThreshold;
+        }
+
+        return true;
     }
 
     public void ManipulateTime(float timeControlFactor)
@@ -151,7 +170,6 @@ public class TimeControllableObject : MonoBehaviour
             rb.isKinematic = true;
 
 
-            isTimeStopped = true;
             timeJustStopped = true;
         }
     }
@@ -166,7 +184,6 @@ public class TimeControllableObject : MonoBehaviour
             rb.velocity = savedVelocity;
             rb.angularVelocity = savedAngularVelocity;
 
-            isTimeStopped = false;
             timeJustStopped = false;
             isRewinding = false;
             isManipulatingTime = false;

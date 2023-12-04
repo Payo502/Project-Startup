@@ -11,16 +11,8 @@ public class DoorTrigger : MonoBehaviour
     private float moveDistance = 2.5f;
     [SerializeField]
     private float moveSpeed = 1f;
-    [SerializeField]
-    [Range(0, 1)]
-    private float shakeIntensity = 0.1f;
-    [SerializeField]
-    [Range(0, 1)]
-    private float maxShakeIntensity = 0.1f;
-    [SerializeField]
-    private float shakeSpeed = 50f;
     
-    private bool isOpen = false;
+    public bool isOpen = false;
 
     private int activatedPads = 0;
 
@@ -45,10 +37,12 @@ public class DoorTrigger : MonoBehaviour
         if (isActivated)
         {
             activatedPads++;
+            Debug.Log("Pressure Pad Activated. Total Activated: " + activatedPads);
         }
         else
         {
             activatedPads--;
+            Debug.Log("Pressure Pad Deactivated. Total Activated: " + activatedPads);
         }
 
         CheckDoorActivation();
@@ -56,10 +50,12 @@ public class DoorTrigger : MonoBehaviour
 
     private void CheckDoorActivation()
     {
+        Debug.Log("Checking Door Activation. Required: " + pressurePads.Count);
         if (activatedPads == pressurePads.Count && !isOpen)
         {
             isOpen = true;
-            StartCoroutine(MoveAndShakeDoor(door.transform.position + new Vector3(0, moveDistance, 0)));
+            Debug.Log("Opening Door.");
+            StartCoroutine(MoveDoor(door.transform.position + new Vector3(0, moveDistance, 0)));
         }
         else if (activatedPads < pressurePads.Count && isOpen)
         {
@@ -73,7 +69,7 @@ public class DoorTrigger : MonoBehaviour
         if (!isOpen)
         {
             isOpen = true;
-            StartCoroutine(MoveAndShakeDoor(door.transform.position + new Vector3(0, moveDistance, 0)));
+            StartCoroutine(MoveDoor(door.transform.position + new Vector3(0, moveDistance, 0)));
         }
     }
 
@@ -82,24 +78,11 @@ public class DoorTrigger : MonoBehaviour
         isOpen = false;
     }
 
-    private IEnumerator MoveAndShakeDoor(Vector3 targetPosition)
-    {
-        Vector3 originalPosition = door.transform.position;
-        float totalDistance = Vector3.Distance(originalPosition, targetPosition);
-
+    private IEnumerator MoveDoor(Vector3 targetPosition)
+    { 
         while (Vector3.Distance(door.transform.position, targetPosition) > 0.01f)
         {
             door.transform.position = Vector3.MoveTowards(door.transform.position, targetPosition, moveSpeed * Time.deltaTime);
-/*
-            float currentDistance = Vector3.Distance(door.transform.position, originalPosition);
-            float progress = currentDistance / totalDistance;
-
-            float shakeIntensity = maxShakeIntensity * Mathf.Sin(progress * Mathf.PI);
-
-            float shakeAmount = Mathf.Sin(Time.time * shakeSpeed) * shakeIntensity;
-            door.transform.position += new Vector3(shakeAmount, 0, shakeAmount);*/
-
-
             yield return null;
         }
         door.transform.position = targetPosition;
