@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MagnetPoint : MonoBehaviour
 {
-    public float forceFactor = 20000f;
-    public float damping = 0.1f;
-    public float maxVelocity = 5f;
+    [SerializeField] private float forceFactor = 20000f;
+    [SerializeField] private float damping = 0.1f;
+    [SerializeField] private float maxVelocity = 5f;
 
     private SphereCollider magneticField;
     List<Rigidbody> rgBalls = new List<Rigidbody>();

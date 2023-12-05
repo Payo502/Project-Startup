@@ -12,7 +12,7 @@ public class DoorTrigger : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 1f;
     
-    public bool isOpen = false;
+    private bool isOpen = false;
 
     private int activatedPads = 0;
 

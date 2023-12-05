@@ -12,6 +12,7 @@ public class TimeManipulator : MonoBehaviour
     [SerializeField] private InputActionProperty xButton;
     [SerializeField] private InputActionProperty yButton;
     [SerializeField] private float sphereCastRadius = 0.5f;
+
     private Camera mainCamera;
 
     [SerializeField] private List<TimeControllableObject> selectedObjects = new List<TimeControllableObject>();

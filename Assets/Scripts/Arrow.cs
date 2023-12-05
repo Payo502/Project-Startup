@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
+    [SerializeField] private Transform tip;
+    
     private Rigidbody rb;
     private Vector3 lastPosition = Vector3.zero;
     private bool isInAir = false;
-
-    [SerializeField] private Transform tip;
 
     private void Awake()
     {

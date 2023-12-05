@@ -5,11 +5,11 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class ActivateGrabRay : MonoBehaviour
 {
-    public GameObject leftGrabRay;
-    public GameObject rightGrabRay;
+    [SerializeField] private GameObject leftGrabRay;
+    [SerializeField] private GameObject rightGrabRay;
 
-    public XRDirectInteractor leftDirectGrab;
-    public XRDirectInteractor rightDirectGrab;
+    [SerializeField] private XRDirectInteractor leftDirectGrab;
+    [SerializeField] private XRDirectInteractor rightDirectGrab;
 
     private void Update()
     {

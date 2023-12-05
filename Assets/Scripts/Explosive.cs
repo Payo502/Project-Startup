@@ -13,15 +13,17 @@ public class Explosive : MonoBehaviour
     {
         if (collision.relativeVelocity.magnitude >= triggerForce)
         {
+            Debug.Log("Explosive triggered by collision with force: " + collision.relativeVelocity.magnitude);
+
             var surroundingObjects = Physics.OverlapSphere(transform.position, explosionRadius);
 
-            foreach (var obj in surroundingObjects)
+/*            foreach (var obj in surroundingObjects)
             {
                 var rb = obj.GetComponent<Rigidbody>();
                 if (rb == null) continue;
 
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
-            }
+                //rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+            }*/
 
             Instantiate(particles, transform.position, Quaternion.identity);
 

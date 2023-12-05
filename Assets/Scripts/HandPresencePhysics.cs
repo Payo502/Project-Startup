@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class HandPresencePhysics : MonoBehaviour
 {
-    public Transform target;
+    [SerializeField] private Transform target;
+    [SerializeField] private Renderer nonPhysicalHand;
+    [SerializeField] private float showNonPhysicalHandDistance = 0.05f;
     private Rigidbody rb;
-    public Renderer nonPhysicalHand;
-    public float showNonPhysicalHandDistance = 0.05f;
     private Collider[] handColliders;
 
     private void Awake()
