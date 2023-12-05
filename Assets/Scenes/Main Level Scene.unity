@@ -11140,7 +11140,8 @@ MonoBehaviour:
   triggerForce: 6.71
   explosionRadius: 5
   explosionForce: 5
-  particles: {fileID: 0}
+  particles: {fileID: 7877257682004364853, guid: f4ca57bd86d59584293c34fca5be653c,
+    type: 3}
 --- !u!1 &725552769
 GameObject:
   m_ObjectHideFlags: 0
@@ -16434,7 +16435,8 @@ MonoBehaviour:
   triggerForce: 6.71
   explosionRadius: 5
   explosionForce: 5
-  particles: {fileID: 0}
+  particles: {fileID: 7877257682004364853, guid: f4ca57bd86d59584293c34fca5be653c,
+    type: 3}
 --- !u!114 &1545499596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26762,7 +26764,8 @@ MonoBehaviour:
   triggerForce: 6.71
   explosionRadius: 5
   explosionForce: 5
-  particles: {fileID: 0}
+  particles: {fileID: 7877257682004364853, guid: f4ca57bd86d59584293c34fca5be653c,
+    type: 3}
 --- !u!114 &2002302675
 MonoBehaviour:
   m_ObjectHideFlags: 0
