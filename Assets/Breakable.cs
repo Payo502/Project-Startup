@@ -14,14 +14,17 @@ public class Breakable : MonoBehaviour
         if (broken) return;
         if (collision.relativeVelocity.magnitude > breakForce)
         {
-            broken = true;
-            var replacement = Instantiate(_replacement, transform.position, transform.rotation);
+            Debug.Log("Statue breaking due to collision with force: " + collision.relativeVelocity.magnitude);
 
-            var rbs = replacement.GetComponentsInChildren<Rigidbody>();
+            broken = true;
+            Instantiate(_replacement, transform.position, transform.rotation);
+
+/*            //var rbs = replacement.GetComponentsInChildren<Rigidbody>();
             foreach (var rb in rbs)
             {
-                rb.AddExplosionForce(collision.relativeVelocity.magnitude * collisionMultipier, collision.contacts[0].point, 2);
-            }
+                //rb.AddExplosionForce(collision.relativeVelocity.magnitude * collisionMultipier, collision.contacts[0].point, 2);
+            }*/
+                Debug.Log("Statue fragments breaking with a force of: " + collision.relativeVelocity.magnitude * collisionMultipier);
             Destroy(gameObject);
         }
     }

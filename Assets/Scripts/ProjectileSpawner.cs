@@ -5,8 +5,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class ProjectileSpawner : MonoBehaviour
 {
-    public GameObject projectile;
-    public GameObject notch;
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private GameObject notch;
 
     private XRGrabInteractable bow;
     private bool isProjectileNotched = false;

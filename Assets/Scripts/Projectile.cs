@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float speed = 10f;
-    public Transform tip;
+    [SerializeField] private float speed = 10f;
+    [SerializeField] private Transform tip;
+    [SerializeField] private LayerMask ignoreLayerMask;
 
     private Rigidbody rb;
     private bool isInAir = false;
     private Vector3 lastPosition = Vector3.zero;
 
-    [SerializeField] private LayerMask ignoreLayerMask;
 
     private void Awake()
     {

@@ -9,8 +9,8 @@ public class PullInteraction : XRBaseInteractable
 {
     public static event Action<float> PullActionReleased;
 
-    public Transform start, end;
-    public GameObject notch;
+    [SerializeField] private Transform start, end;
+    [SerializeField] private GameObject notch;
 
     public float pullAmount { get; private set; } = 0.0f;
 
