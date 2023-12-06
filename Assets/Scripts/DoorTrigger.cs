@@ -70,6 +70,8 @@ public class DoorTrigger : MonoBehaviour
         {
             isOpen = true;
             StartCoroutine(MoveDoor(door.transform.position + new Vector3(0, moveDistance, 0)));
+
+            GameAudioManager.PlaySound(GameAudioManager.Sound.DoorSlide, transform.position);
         }
     }
 

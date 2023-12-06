@@ -20,7 +20,7 @@ public class PressurePad : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isActivated && other.CompareTag("Interactable")  || other.CompareTag("Player"))
+        if (!isActivated && (other.CompareTag("Interactable")  || other.CompareTag("Player")))
         {
             isActivated = true;
             OnStateChange?.Invoke(isActivated);
@@ -41,7 +41,7 @@ public class PressurePad : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Interactable"))
+        if (other.CompareTag("Interactable") || other.CompareTag("Player"))
         {
             lastExitTime = Time.time;
             if (deactivationCoroutine == null)

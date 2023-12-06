@@ -12,11 +12,16 @@ public class Projectile : MonoBehaviour
     private bool isInAir = false;
     private Vector3 lastPosition = Vector3.zero;
 
+    private ParticleSystem particleSystem;
+    private TrailRenderer trailRenderer;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         PullInteraction.PullActionReleased += Release;
+
+        particleSystem = GetComponentInChildren<ParticleSystem>();
+        trailRenderer = GetComponentInChildren<TrailRenderer>();
 
 
         Stop();
@@ -41,6 +46,9 @@ public class Projectile : MonoBehaviour
         StartCoroutine(RotateWithVelocity());
 
         lastPosition = tip.position;
+
+        particleSystem.Play();
+        trailRenderer.emitting = true;
 
     }
 
@@ -85,6 +93,9 @@ public class Projectile : MonoBehaviour
     {
         isInAir = false;
         SetPhysics(false);
+
+        particleSystem.Stop();
+        trailRenderer.emitting = false;
     }
 
     private void SetPhysics(bool usePhysics)

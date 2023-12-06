@@ -5,6 +5,7 @@ using UnityEngine;
 public class Breakable : MonoBehaviour
 {
     [SerializeField] private GameObject _replacement;
+    [SerializeField] private GameObject floor;
     [SerializeField] private float breakForce = 2f;
     [SerializeField] private float collisionMultipier = 100;
     [SerializeField] private bool broken;
@@ -19,12 +20,18 @@ public class Breakable : MonoBehaviour
             broken = true;
             Instantiate(_replacement, transform.position, transform.rotation);
 
-/*            //var rbs = replacement.GetComponentsInChildren<Rigidbody>();
-            foreach (var rb in rbs)
+            /*            //var rbs = replacement.GetComponentsInChildren<Rigidbody>();
+                        foreach (var rb in rbs)
+                        {
+                            //rb.AddExplosionForce(collision.relativeVelocity.magnitude * collisionMultipier, collision.contacts[0].point, 2);
+                        }*/
+            Debug.Log("Statue fragments breaking with a force of: " + collision.relativeVelocity.magnitude * collisionMultipier);
+            
+            if (floor != null)
             {
-                //rb.AddExplosionForce(collision.relativeVelocity.magnitude * collisionMultipier, collision.contacts[0].point, 2);
-            }*/
-                Debug.Log("Statue fragments breaking with a force of: " + collision.relativeVelocity.magnitude * collisionMultipier);
+                Destroy(floor);
+            }
+
             Destroy(gameObject);
         }
     }

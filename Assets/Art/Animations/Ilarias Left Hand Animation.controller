@@ -25,7 +25,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 4781951162920444690, guid: b8a2b901970a7b6479f7080062dd3fb1,
+    m_Motion: {fileID: -1422011007694221501, guid: 38d64c48ca9834c40b871b01d882f48e,
       type: 3}
     m_Threshold: 0.6666667
     m_Position: {x: 1, y: 0}
@@ -34,7 +34,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 4781951162920444690, guid: b8a2b901970a7b6479f7080062dd3fb1,
+    m_Motion: {fileID: -1422011007694221501, guid: 38d64c48ca9834c40b871b01d882f48e,
       type: 3}
     m_Threshold: 1
     m_Position: {x: 1, y: 1}
@@ -58,12 +58,18 @@ AnimatorController:
   m_Name: Ilarias Left Hand Animation
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Blend
+  - m_Name: Grip
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: Trigger
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
