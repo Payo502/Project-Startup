@@ -47,8 +47,12 @@ public class Projectile : MonoBehaviour
 
         lastPosition = tip.position;
 
-        particleSystem.Play();
-        trailRenderer.emitting = true;
+        if (trailRenderer != null)
+        {
+
+            trailRenderer.emitting = true;
+        }
+        //particleSystem.Play();
 
     }
 
@@ -94,8 +98,12 @@ public class Projectile : MonoBehaviour
         isInAir = false;
         SetPhysics(false);
 
-        //particleSystem.Stop();
+        if (trailRenderer != null)
+        {
+
         trailRenderer.emitting = false;
+        }
+        //particleSystem.Stop();
     }
 
     private void SetPhysics(bool usePhysics)
