@@ -9,6 +9,7 @@ public class Breakable : MonoBehaviour
     [SerializeField] private float breakForce = 2f;
     [SerializeField] private float collisionMultipier = 100;
     [SerializeField] private bool broken;
+    [SerializeField] private Transform parentTransform;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -18,7 +19,7 @@ public class Breakable : MonoBehaviour
             Debug.Log("Statue breaking due to collision with force: " + collision.relativeVelocity.magnitude);
 
             broken = true;
-            Instantiate(_replacement, transform.position, transform.rotation);
+            Instantiate(_replacement, parentTransform.transform.position, transform.rotation);
 
             /*            //var rbs = replacement.GetComponentsInChildren<Rigidbody>();
                         foreach (var rb in rbs)
@@ -35,4 +36,14 @@ public class Breakable : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+/*    void Update()
+    {
+        if (broken)
+        {
+            Instantiate(_replacement, parentTransform.transform.position, transform.rotation);
+            Destroy(gameObject);
+
+        }
+    }*/
 }

@@ -94,7 +94,7 @@ public class Projectile : MonoBehaviour
         isInAir = false;
         SetPhysics(false);
 
-        particleSystem.Stop();
+        //particleSystem.Stop();
         trailRenderer.emitting = false;
     }
 
