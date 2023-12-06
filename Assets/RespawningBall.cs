@@ -5,16 +5,23 @@ using UnityEngine;
 public class RespawningBall : MonoBehaviour
 {
     [SerializeField] private float threshold;
-    [SerializeField] private float xPos;
-    [SerializeField] private float yPos;
-    [SerializeField] private float zPos;
+    [SerializeField] private Transform respawnPoint;
 
+    private Rigidbody rb;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     private void FixedUpdate()
     {
         if (transform.position.y < threshold)
         {
-            transform.position = new Vector3(xPos, yPos, zPos);
+            transform.position = respawnPoint.position;
+
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
     }
 }

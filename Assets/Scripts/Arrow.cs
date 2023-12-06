@@ -14,6 +14,7 @@ public class Arrow : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
+
         //Stop();
     }
 

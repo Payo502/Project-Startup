@@ -48,6 +48,8 @@ public class PullInteraction : XRBaseInteractable
                 pullAmount = CalculatePull(pullPosition);
 
                 UpdateString();
+
+                HapticFeedback();
             }
         }
     }
@@ -68,5 +70,14 @@ public class PullInteraction : XRBaseInteractable
         Vector3 linePosition = Vector3.forward * Mathf.Lerp(start.transform.localPosition.z, end.transform.localPosition.z, pullAmount);
         notch.transform.localPosition = new Vector3(notch.transform.localPosition.x, notch.transform.localPosition.y, linePosition.z + 0.2f);
         lineRenderer.SetPosition(1, linePosition);
+    }
+
+    private void HapticFeedback()
+    {
+        if (pullingInteractor != null)
+        {
+            ActionBasedController currentController = pullingInteractor.transform.gameObject.GetComponent<ActionBasedController>();
+            currentController.SendHapticImpulse(pullAmount, 0.1f);
+        }
     }
 }

@@ -2619,6 +2619,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 228e0b7cd84674c4a81121de448cc832, type: 3}
+--- !u!1 &286824967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 286824968}
+  m_Layer: 0
+  m_Name: Ball 2 Respawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &286824968
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286824967}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.1319997, y: 4.99, z: -0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1053170082}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &287402033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3877,6 +3908,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1374766083}
     m_Modifications:
+    - target: {fileID: 1599828600296129087, guid: ebb730e52bbb6a34e954510aa0f89edd,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.4154987
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599828600296129087, guid: ebb730e52bbb6a34e954510aa0f89edd,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.00000005960465
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599828600296129087, guid: ebb730e52bbb6a34e954510aa0f89edd,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 1.7055118
+      objectReference: {fileID: 0}
     - target: {fileID: 3802144762032182050, guid: ebb730e52bbb6a34e954510aa0f89edd,
         type: 3}
       propertyPath: m_Name
@@ -4482,8 +4528,13 @@ PrefabInstance:
     - target: {fileID: 9094661825535328246, guid: 607f5d3f6a288f345a4059060eaa8370,
         type: 3}
       propertyPath: threshold
-      value: -1.11
+      value: -5
       objectReference: {fileID: 0}
+    - target: {fileID: 9094661825535328246, guid: 607f5d3f6a288f345a4059060eaa8370,
+        type: 3}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 286824968}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 607f5d3f6a288f345a4059060eaa8370, type: 3}
 --- !u!1001 &520984295
@@ -14461,6 +14512,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1374766083}
     m_Modifications:
+    - target: {fileID: 1599828600296129087, guid: ebb730e52bbb6a34e954510aa0f89edd,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.4105648
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599828600296129087, guid: ebb730e52bbb6a34e954510aa0f89edd,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.00000005960465
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599828600296129087, guid: ebb730e52bbb6a34e954510aa0f89edd,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 1.7030451
+      objectReference: {fileID: 0}
     - target: {fileID: 3802144762032182050, guid: ebb730e52bbb6a34e954510aa0f89edd,
         type: 3}
       propertyPath: m_Name
@@ -15434,6 +15500,40 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4493585093827132993, guid: 560298e20c1d89649aa0746c0b5f72f4, type: 3}
+--- !u!1 &1053170081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1053170082}
+  m_Layer: 0
+  m_Name: Respawn Points
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1053170082
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053170081}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1849813348}
+  - {fileID: 1992863246}
+  - {fileID: 286824968}
+  m_Father: {fileID: 0}
+  m_RootOrder: 23
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1073788746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27643,7 +27743,7 @@ PrefabInstance:
     - target: {fileID: 2448487796810190584, guid: a19d38554fec946429cf74626d1aefe3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.74
+      value: 11.8
       objectReference: {fileID: 0}
     - target: {fileID: 2448487796810190584, guid: a19d38554fec946429cf74626d1aefe3,
         type: 3}
@@ -27653,7 +27753,7 @@ PrefabInstance:
     - target: {fileID: 2448487796810190584, guid: a19d38554fec946429cf74626d1aefe3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.01
+      value: -10.35
       objectReference: {fileID: 0}
     - target: {fileID: 2448487796810190584, guid: a19d38554fec946429cf74626d1aefe3,
         type: 3}
@@ -27720,12 +27820,18 @@ PrefabInstance:
       propertyPath: m_MoveSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5879389049537989366, guid: a19d38554fec946429cf74626d1aefe3,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8004007328426334254, guid: a19d38554fec946429cf74626d1aefe3,
         type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4115334866299777117, guid: a19d38554fec946429cf74626d1aefe3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a19d38554fec946429cf74626d1aefe3, type: 3}
 --- !u!1 &1679209864 stripped
 GameObject:
@@ -27745,7 +27851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ad41f5908fcff489579e59f1bb4064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: -1.7
+  threshold: -5
 --- !u!1001 &1683629798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29165,8 +29271,13 @@ PrefabInstance:
     - target: {fileID: 9094661825535328246, guid: 607f5d3f6a288f345a4059060eaa8370,
         type: 3}
       propertyPath: threshold
-      value: -1.11
+      value: -5
       objectReference: {fileID: 0}
+    - target: {fileID: 9094661825535328246, guid: 607f5d3f6a288f345a4059060eaa8370,
+        type: 3}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 1992863246}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 607f5d3f6a288f345a4059060eaa8370, type: 3}
 --- !u!1001 &1775588958
@@ -29822,7 +29933,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1849813348}
   m_Layer: 0
-  m_Name: Respawn Point
+  m_Name: Player Respawn Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29835,13 +29946,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849813347}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.835, y: 0, z: 3.12}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.45, y: 0, z: 3.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_Father: {fileID: 1053170082}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1852896547
 PrefabInstance:
@@ -30728,6 +30839,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4493585093827132993, guid: 560298e20c1d89649aa0746c0b5f72f4, type: 3}
+--- !u!1 &1992863245
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1992863246}
+  m_Layer: 0
+  m_Name: Ball 1 Respawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1992863246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992863245}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.076, y: 0.9099997, z: -0.10800004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1053170082}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1999881028
 PrefabInstance:
   m_ObjectHideFlags: 0
