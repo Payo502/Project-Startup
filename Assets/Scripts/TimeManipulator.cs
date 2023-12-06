@@ -28,9 +28,6 @@ public class TimeManipulator : MonoBehaviour
 
     private void Awake()
     {
-        //XRBaseInteractor interactable = GetComponent<XRBaseInteractor>();
-        //interactable.activated.AddListener(TriggerHapticFeedback);
-
         mainCamera = Camera.main;
     }
 
@@ -69,8 +66,6 @@ public class TimeManipulator : MonoBehaviour
                 }
             }
         }
-
-        // Remove objects that are no longer in the sphere cast
         selectedObjects.RemoveAll(obj => !hitObjects.Contains(obj) && obj != null);
     }
 
@@ -122,16 +117,15 @@ public class TimeManipulator : MonoBehaviour
 
         foreach (var obj in selectedObjects)
         {
-            if (obj != lastPickedUpObject) // Avoid manipulating the last picked up object twice
+            if (obj != lastPickedUpObject) 
             {
                 obj.ManipulateTime(timeControlFactor);
             }
         }
-
-        // Always manipulate time for the last picked up object
         if (lastPickedUpObject != null)
         {
             lastPickedUpObject.ManipulateTime(timeControlFactor);
+     
         }
     }
 
@@ -139,16 +133,16 @@ public class TimeManipulator : MonoBehaviour
     {
         if (xButton.action.IsPressed())
         {
-            GameAudioManager.PlaySound(GameAudioManager.Sound.Rewind, transform.position);
+            //GameAudioManager.PlaySound(GameAudioManager.Sound.Rewind, transform.position);
 
 
-            return -1.0f; // Rewind time
+            return -1.0f; 
         }
         else if (yButton.action.triggered)
         {
-            return 1.0f; // Speed up time
+            return 1.0f;
         }
-        return 0f; // No input
+        return 0f;
     }
 
 
@@ -195,13 +189,12 @@ public class TimeManipulator : MonoBehaviour
             TimeControllableObject timeControllableObject = grabInteractable.GetComponent<TimeControllableObject>();
             if (timeControllableObject != null)
             {
-                // Clear the current selection
-                selectedObjects.Clear();
 
-                // Set the new object as the last picked up object
+                //selectedObjects.Clear();
+                timeControllableObject.isBeingInteractedWith = true;
+
                 lastPickedUpObject = timeControllableObject;
 
-                // Reset the time manipulation state when the object is picked up
                 lastPickedUpObject.ResetTimeManipulation();
                 lastPickedUpObject.OnPickedUp();
             }
@@ -216,6 +209,7 @@ public class TimeManipulator : MonoBehaviour
             TimeControllableObject timeControllableObject = grabInteractable.GetComponent<TimeControllableObject>();
             if (timeControllableObject != null)
             {
+                timeControllableObject.isBeingInteractedWith = false;
                 lastPickedUpObject.OnReleased();
                 lastPickedUpObject.ResumeTime();
             }

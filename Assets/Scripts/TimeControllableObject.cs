@@ -18,6 +18,10 @@ public class TimeControllableObject : MonoBehaviour
     private Vector3 savedAngularVelocity;
     private Rigidbody rb;
 
+    public bool isBeingInteractedWith { get; set; }
+
+
+
     private void Awake()
     {
         pointsInTime = new List<PointInTime>();
@@ -103,6 +107,11 @@ public class TimeControllableObject : MonoBehaviour
     {
         const float speedUpThreshold = 0.1f;
         const float slowDownThreshold = -0.1f;
+
+        if (isBeingInteractedWith)
+        {
+            return;
+        }
 
         if (timeJustStopped)
         {
