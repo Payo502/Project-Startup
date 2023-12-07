@@ -11,6 +11,7 @@ public class Breakable : MonoBehaviour
     [SerializeField] private float collisionMultipier = 100;
     [SerializeField] private bool broken;
     [SerializeField] private Transform parentTransform;
+    [SerializeField] private GameObject parentGameObject;
     private VisualEffect visualEffect;
 
     private void OnCollisionEnter(Collision collision)
@@ -36,7 +37,7 @@ public class Breakable : MonoBehaviour
                 Destroy(floor);
             }
 
-            Destroy(gameObject);
+            Destroy(parentGameObject);
         }
     }
 
