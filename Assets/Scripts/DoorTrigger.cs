@@ -56,6 +56,7 @@ public class DoorTrigger : MonoBehaviour
             isOpen = true;
             Debug.Log("Opening Door.");
             StartCoroutine(MoveDoor(door.transform.position + new Vector3(0, moveDistance, 0)));
+            GameAudioManager.PlaySound(GameAudioManager.Sound.DoorSlide, transform.position);
         }
         else if (activatedPads < pressurePads.Count && isOpen)
         {
@@ -71,7 +72,7 @@ public class DoorTrigger : MonoBehaviour
             isOpen = true;
             StartCoroutine(MoveDoor(door.transform.position + new Vector3(0, moveDistance, 0)));
 
-            GameAudioManager.PlaySound(GameAudioManager.Sound.DoorSlide, transform.position);
+            Debug.Log("Playing Door slide sound");
         }
     }
 

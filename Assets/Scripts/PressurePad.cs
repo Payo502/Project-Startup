@@ -14,57 +14,64 @@ public class PressurePad : MonoBehaviour
     [SerializeField] private MeshRenderer parentRender;
 
 
-    private bool isActivated = false;
+    public int objectsOnPad = 0;
+    public bool isActivated = false;
     private Coroutine deactivationCoroutine;
-    private float lastExitTime;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isActivated && (other.CompareTag("Interactable")  || other.CompareTag("Player")))
+        if (IsRelevantObject(other))
         {
-            isActivated = true;
-            OnStateChange?.Invoke(isActivated);
-
-            Debug.Log("Pressurepad Activated");
-
-            if (deactivationCoroutine != null)
-            {
-                StopCoroutine(deactivationCoroutine);
-            }
-        }
-
-        if (parentRender != null && activatedMaterial != null)
-        {
-            parentRender.material = activatedMaterial;
+            objectsOnPad++;
+            ActivatePressurePad();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Interactable") || other.CompareTag("Player"))
+        if (IsRelevantObject(other))
         {
-            lastExitTime = Time.time;
-            if (deactivationCoroutine == null)
+            objectsOnPad--;
+            if (objectsOnPad <= 0 && deactivationCoroutine == null)
             {
                 deactivationCoroutine = StartCoroutine(DeactivateAfterDelay());
             }
         }
     }
 
+    private void ActivatePressurePad()
+    {
+        if (!parentRender.material.Equals(activatedMaterial))
+        {
+            parentRender.material = activatedMaterial;
+            OnStateChange?.Invoke(true);
+        }
+
+        if (deactivationCoroutine != null)
+        {
+            StopCoroutine(deactivationCoroutine);
+            deactivationCoroutine = null;
+        }
+    }
+
+    private void DeactivatePressurePad()
+    {
+        parentRender.material = deactivatedMaterial;
+        OnStateChange?.Invoke(false);
+        deactivationCoroutine = null;
+    }
+
     private IEnumerator DeactivateAfterDelay()
     {
         yield return new WaitForSeconds(deactivationDelay);
-
-        if (Time.time >= lastExitTime + deactivationDelay)
+        if (objectsOnPad <= 0)
         {
-            isActivated = false;
-            OnStateChange?.Invoke(isActivated);
-            deactivationCoroutine = null;
+            DeactivatePressurePad();
         }
+    }
 
-        if (parentRender != null && deactivatedMaterial != null)
-        {
-            parentRender.material = deactivatedMaterial;
-        }
+    private bool IsRelevantObject(Collider other)
+    {
+        return other.CompareTag("Interactable") || other.CompareTag("Player");
     }
 }

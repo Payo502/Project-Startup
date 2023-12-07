@@ -135,6 +135,7 @@ MonoBehaviour:
   collisionMultipier: 100
   broken: 0
   parentTransform: {fileID: 8232447847533678463}
+  parentGameObject: {fileID: 0}
 --- !u!1 &8232447847533678432
 GameObject:
   m_ObjectHideFlags: 0

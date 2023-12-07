@@ -16,6 +16,7 @@ public static class GameAudioManager
         AmbienceSound,
         DoorSlide,
         TorchSound,
+        QuickGrab,
     }
 
     private static Dictionary<Sound, float> soundTimerDictionary;
@@ -98,7 +99,7 @@ public static class GameAudioManager
                 if (soundTimerDictionary.ContainsKey(sound))
                 {
                     float lastTimePlayed = soundTimerDictionary[sound];
-                    float playerMoveTimerMax = 0.05f;
+                    float playerMoveTimerMax = 9f;
                     if (lastTimePlayed + playerMoveTimerMax < Time.time)
                     {
                         soundTimerDictionary[sound] = Time.time;

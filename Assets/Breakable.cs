@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Breakable : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Breakable : MonoBehaviour
     [SerializeField] private float collisionMultipier = 100;
     [SerializeField] private bool broken;
     [SerializeField] private Transform parentTransform;
+    [SerializeField] private GameObject parentGameObject;
+    private VisualEffect visualEffect;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -26,6 +29,7 @@ public class Breakable : MonoBehaviour
                         {
                             //rb.AddExplosionForce(collision.relativeVelocity.magnitude * collisionMultipier, collision.contacts[0].point, 2);
                         }*/
+
             Debug.Log("Statue fragments breaking with a force of: " + collision.relativeVelocity.magnitude * collisionMultipier);
             
             if (floor != null)
@@ -33,7 +37,7 @@ public class Breakable : MonoBehaviour
                 Destroy(floor);
             }
 
-            Destroy(gameObject);
+            Destroy(parentGameObject);
         }
     }
 

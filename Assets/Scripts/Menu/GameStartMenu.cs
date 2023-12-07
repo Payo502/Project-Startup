@@ -47,6 +47,7 @@ public class GameStartMenu : MonoBehaviour
         SceneTransitionManager.singleton.GoToSceneAsync(1);
 
         GameAudioManager.PlaySound(GameAudioManager.Sound.AmbienceSound, true);
+        Debug.Log("Playing Ambience Sound");
     }
 
     public void HideAll()
