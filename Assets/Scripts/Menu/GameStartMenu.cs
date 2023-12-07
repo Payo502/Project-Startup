@@ -27,7 +27,7 @@ public class GameStartMenu : MonoBehaviour
         startButton.onClick.AddListener(StartGame);
         optionButton.onClick.AddListener(EnableOption);
         aboutButton.onClick.AddListener(EnableAbout);
-        quitButton.onClick.AddListener(QuitGame);
+        //quitButton.onClick.AddListener(QuitGame);
 
         foreach (var item in returnButtons)
         {

@@ -23991,6 +23991,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 996715385507166417, guid: f0152c478e51a3c448d75701434a821d,
+        type: 3}
+      propertyPath: m_AttachTransform
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 996715385507166417, guid: f0152c478e51a3c448d75701434a821d,
+        type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4744822972015504258, guid: f0152c478e51a3c448d75701434a821d,
         type: 3}
       propertyPath: m_Name
@@ -24153,12 +24163,22 @@ PrefabInstance:
         type: 3}
       propertyPath: floor
       value: 
+      objectReference: {fileID: 573922830}
+    - target: {fileID: 6190144260831499956, guid: 84f5053c3994c864088c01de2af8a44d,
+        type: 3}
+      propertyPath: broken
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6190144260831499956, guid: 84f5053c3994c864088c01de2af8a44d,
         type: 3}
       propertyPath: breakForce
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6190144260831499956, guid: 84f5053c3994c864088c01de2af8a44d,
+        type: 3}
+      propertyPath: parentGameObject
+      value: 
+      objectReference: {fileID: 8232447847106938064}
     - target: {fileID: 8232447847533678432, guid: 84f5053c3994c864088c01de2af8a44d,
         type: 3}
       propertyPath: m_Name
@@ -24226,3 +24246,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84f5053c3994c864088c01de2af8a44d, type: 3}
+--- !u!1 &8232447847106938064 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8232447847533678432, guid: 84f5053c3994c864088c01de2af8a44d,
+    type: 3}
+  m_PrefabInstance: {fileID: 8232447847106938063}
+  m_PrefabAsset: {fileID: 0}
