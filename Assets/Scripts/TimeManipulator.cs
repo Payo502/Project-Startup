@@ -197,6 +197,8 @@ public class TimeManipulator : MonoBehaviour
 
                 lastPickedUpObject.ResetTimeManipulation();
                 lastPickedUpObject.OnPickedUp();
+
+                GameAudioManager.PlaySound(GameAudioManager.Sound.QuickGrab);
             }
         }
     }
